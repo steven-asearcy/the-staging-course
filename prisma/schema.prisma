@@ -30,6 +30,12 @@ enum ResourceType {
   DOWNLOAD
 }
 
+enum EnrollmentMethod {
+  MANUAL
+  PURCHASE
+  SUBSCRIPTION
+}
+
 model User {
   id             String    @id @default(cuid())
   name           String?
@@ -37,17 +43,21 @@ model User {
   emailVerified  DateTime?
   image          String?
   hashedPassword String?
+  phone          String?
+  notes          String?   @db.Text
+  isActive       Boolean   @default(true)
   role           UserRole  @default(USER)
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
-  accounts       Account[]
-  sessions       Session[]
-  enrollments    Enrollment[]
-  progress       LessonProgress[]
-  certificates   Certificate[]
-  purchases      Purchase[]
-  subscription   Subscription?
+  accounts            Account[]
+  sessions            Session[]
+  enrollments         Enrollment[]
+  enrollmentsCreated  Enrollment[]     @relation("EnrolledByUser")
+  progress            LessonProgress[]
+  certificates        Certificate[]
+  purchases           Purchase[]
+  subscription        Subscription?
 
   @@map("users")
 }
@@ -103,9 +113,9 @@ model Course {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  chapters    Chapter[]
-  enrollments Enrollment[]
-  purchases   Purchase[]
+  chapters     Chapter[]
+  enrollments  Enrollment[]
+  purchases    Purchase[]
   certificates Certificate[]
 
   @@map("courses")
@@ -165,18 +175,22 @@ model Resource {
 }
 
 model Enrollment {
-  id           String       @id @default(cuid())
-  purchaseType PurchaseType
-  createdAt    DateTime     @default(now())
+  id               String           @id @default(cuid())
+  purchaseType     PurchaseType
+  enrollmentMethod EnrollmentMethod @default(MANUAL)
+  createdAt        DateTime         @default(now())
 
-  userId   String
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  courseId String
-  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId     String
+  course       Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  enrolledById String?
+  enrolledBy   User?   @relation("EnrolledByUser", fields: [enrolledById], references: [id], onDelete: SetNull)
 
   @@unique([userId, courseId])
   @@index([userId])
   @@index([courseId])
+  @@index([enrolledById])
   @@map("enrollments")
 }
 

@@ -61,7 +61,7 @@ export function UserPasswordReset({ userId, userEmail }: UserPasswordResetProps)
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as never,
     defaultValues: {
       password: "",
       confirmPassword: "",

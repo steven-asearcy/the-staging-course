@@ -70,7 +70,7 @@ export function UserProfileForm({ user }: UserProfileFormProps) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as never,
     defaultValues: {
       name: user.name || "",
       email: user.email,

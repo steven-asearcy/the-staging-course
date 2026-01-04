@@ -48,7 +48,7 @@ const formSchema = z.object({
   price: z.coerce.number().min(0, "Price must be positive"),
 });
 
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof formSchema> & { price: number };
 
 interface CourseFormProps {
   course: Course;
@@ -60,7 +60,7 @@ export function CourseForm({ course }: CourseFormProps) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as never,
     defaultValues: {
       title: course.title,
       description: course.description || "",

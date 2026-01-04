@@ -47,7 +47,7 @@ export function CreateUserForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as never,
     defaultValues: {
       name: "",
       email: "",

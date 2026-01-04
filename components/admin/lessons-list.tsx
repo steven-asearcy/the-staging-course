@@ -60,7 +60,7 @@ export function LessonsList({ chapterId, lessons, courseId }: LessonsListProps) 
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as never,
     defaultValues: { title: "" },
   });
 

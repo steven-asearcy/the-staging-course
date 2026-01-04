@@ -74,12 +74,12 @@ export function ChaptersList({ courseId, chapters }: ChaptersListProps) {
   const [openChapters, setOpenChapters] = useState<Set<string>>(new Set());
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as never,
     defaultValues: { title: "" },
   });
 
   const editForm = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as never,
     defaultValues: { title: "" },
   });
 

@@ -25,7 +25,7 @@ export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<LoginInput>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginSchema) as never,
     defaultValues: {
       email: "",
       password: "",

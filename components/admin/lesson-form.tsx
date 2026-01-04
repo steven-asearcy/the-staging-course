@@ -61,7 +61,7 @@ export function LessonForm({ lesson }: LessonFormProps) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as never,
     defaultValues: {
       title: lesson.title,
       content: lesson.content || "",

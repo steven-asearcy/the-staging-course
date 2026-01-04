@@ -8,7 +8,7 @@ export async function registerUser(data: RegisterInput) {
   const validated = registerSchema.safeParse(data);
 
   if (!validated.success) {
-    return { error: validated.error.errors[0].message };
+    return { error: validated.error.issues[0].message };
   }
 
   const { name, email, password } = validated.data;

@@ -1,0 +1,246 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum PurchaseType {
+  ONE_TIME
+  SUBSCRIPTION
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PAST_DUE
+  UNPAID
+}
+
+enum ResourceType {
+  PDF
+  LINK
+  DOWNLOAD
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  email          String    @unique
+  emailVerified  DateTime?
+  image          String?
+  hashedPassword String?
+  role           UserRole  @default(USER)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  accounts       Account[]
+  sessions       Session[]
+  enrollments    Enrollment[]
+  progress       LessonProgress[]
+  certificates   Certificate[]
+  purchases      Purchase[]
+  subscription   Subscription?
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String?  @db.Text
+  imageUrl    String?
+  price       Int      @default(0)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  chapters    Chapter[]
+  enrollments Enrollment[]
+  purchases   Purchase[]
+  certificates Certificate[]
+
+  @@map("courses")
+}
+
+model Chapter {
+  id          String   @id @default(cuid())
+  title       String
+  description String?  @db.Text
+  position    Int
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  lessons Lesson[]
+
+  @@index([courseId])
+  @@map("chapters")
+}
+
+model Lesson {
+  id          String   @id @default(cuid())
+  title       String
+  content     String?  @db.Text
+  videoUrl    String?
+  position    Int
+  isFree      Boolean  @default(false)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  chapterId String
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  resources Resource[]
+  progress  LessonProgress[]
+
+  @@index([chapterId])
+  @@map("lessons")
+}
+
+model Resource {
+  id        String       @id @default(cuid())
+  title     String
+  url       String
+  type      ResourceType @default(DOWNLOAD)
+  createdAt DateTime     @default(now())
+
+  lessonId String
+  lesson   Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@index([lessonId])
+  @@map("resources")
+}
+
+model Enrollment {
+  id           String       @id @default(cuid())
+  purchaseType PurchaseType
+  createdAt    DateTime     @default(now())
+
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@index([courseId])
+  @@map("enrollments")
+}
+
+model LessonProgress {
+  id          String    @id @default(cuid())
+  isCompleted Boolean   @default(false)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonId String
+  lesson   Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@index([userId])
+  @@index([lessonId])
+  @@map("lesson_progress")
+}
+
+model Certificate {
+  id                String   @id @default(cuid())
+  certificateNumber String   @unique
+  issuedAt          DateTime @default(now())
+
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@map("certificates")
+}
+
+model Purchase {
+  id              String   @id @default(cuid())
+  amount          Int
+  stripePaymentId String?
+  createdAt       DateTime @default(now())
+
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([courseId])
+  @@map("purchases")
+}
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  stripeCustomerId     String             @unique
+  stripeSubscriptionId String             @unique
+  stripePriceId        String
+  status               SubscriptionStatus @default(ACTIVE)
+  currentPeriodEnd     DateTime
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}

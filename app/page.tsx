@@ -45,7 +45,7 @@ export default async function LandingPage() {
         <div className="container mx-auto flex h-20 items-center justify-between px-6">
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/logo.svg"
+              src="/aspnospace.png"
               alt="The Staging Course"
               width={40}
               height={40}
@@ -201,7 +201,7 @@ export default async function LandingPage() {
               <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-primary/20 to-accent overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <Image
-                    src="/logo.svg"
+                    src="/aspnospace.png"
                     alt=""
                     width={96}
                     height={96}
@@ -440,7 +440,7 @@ export default async function LandingPage() {
             <div className="md:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-4">
               <Image
-                src="/logo.svg"
+                src="/aspnospace.png"
                 alt="The Staging Course"
                 width={32}
                 height={32}

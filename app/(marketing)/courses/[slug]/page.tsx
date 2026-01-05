@@ -120,7 +120,7 @@ export default async function CourseDetailPage({
         <div className="container mx-auto flex h-16 items-center justify-between px-6">
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/logo.svg"
+              src="/aspnospace.png"
               alt="The Staging Course"
               width={32}
               height={32}

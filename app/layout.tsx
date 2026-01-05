@@ -20,6 +20,10 @@ export const metadata: Metadata = {
   },
   description:
     "Master the art of home staging with professional courses designed to transform spaces and elevate your career.",
+  icons: {
+    icon: "/aspnospace.png",
+    apple: "/aspnospace.png",
+  },
 };
 
 export default function RootLayout({

@@ -100,8 +100,15 @@ export default async function DashboardPage() {
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
         <div className="container mx-auto flex h-16 items-center justify-between px-6">
-          <Link href="/" className="text-xl font-semibold">
-            The Staging Course
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/logo.svg"
+              alt="The Staging Course"
+              width={32}
+              height={32}
+              className="h-8 w-8"
+            />
+            <span className="text-xl font-semibold">The Staging Course</span>
           </Link>
           <div className="flex items-center gap-4">
             <Link

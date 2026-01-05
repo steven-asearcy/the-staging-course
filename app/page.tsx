@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
   CheckCircle,
-  Sparkles,
   Home,
   Palette,
   TrendingUp,
@@ -14,6 +13,7 @@ import {
   BookOpen,
   Instagram,
   Mail,
+  Star,
 } from "lucide-react";
 
 async function getFeaturedCourses() {
@@ -43,8 +43,14 @@ export default async function LandingPage() {
       {/* Navigation */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b">
         <div className="container mx-auto flex h-20 items-center justify-between px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-primary" />
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/logo.svg"
+              alt="The Staging Course"
+              width={40}
+              height={40}
+              className="h-10 w-10"
+            />
             <span className="text-xl font-semibold tracking-tight">
               The Staging Course
             </span>
@@ -194,7 +200,13 @@ export default async function LandingPage() {
             <div className="relative">
               <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-primary/20 to-accent overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Sparkles className="h-24 w-24 text-primary/30" />
+                  <Image
+                    src="/logo.svg"
+                    alt=""
+                    width={96}
+                    height={96}
+                    className="h-24 w-24 opacity-30"
+                  />
                 </div>
               </div>
               <div className="absolute -bottom-6 -right-6 w-48 h-48 rounded-2xl bg-primary/10 -z-10" />
@@ -327,7 +339,7 @@ export default async function LandingPage() {
             <div className="p-8 rounded-2xl bg-card border">
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
-                  <Sparkles key={i} className="h-4 w-4 text-primary" />
+                  <Star key={i} className="h-4 w-4 text-primary fill-primary" />
                 ))}
               </div>
               <p className="text-muted-foreground mb-6">
@@ -350,7 +362,7 @@ export default async function LandingPage() {
             <div className="p-8 rounded-2xl bg-card border">
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
-                  <Sparkles key={i} className="h-4 w-4 text-primary" />
+                  <Star key={i} className="h-4 w-4 text-primary fill-primary" />
                 ))}
               </div>
               <p className="text-muted-foreground mb-6">
@@ -373,7 +385,7 @@ export default async function LandingPage() {
             <div className="p-8 rounded-2xl bg-card border">
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
-                  <Sparkles key={i} className="h-4 w-4 text-primary" />
+                  <Star key={i} className="h-4 w-4 text-primary fill-primary" />
                 ))}
               </div>
               <p className="text-muted-foreground mb-6">
@@ -426,10 +438,16 @@ export default async function LandingPage() {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-12">
             <div className="md:col-span-2">
-              <Link href="/" className="flex items-center gap-2 mb-4">
-                <Sparkles className="h-6 w-6 text-primary" />
-                <span className="text-xl font-semibold">The Staging Course</span>
-              </Link>
+            <Link href="/" className="flex items-center gap-3 mb-4">
+              <Image
+                src="/logo.svg"
+                alt="The Staging Course"
+                width={32}
+                height={32}
+                className="h-8 w-8"
+              />
+              <span className="text-xl font-semibold">The Staging Course</span>
+            </Link>
               <p className="text-muted-foreground max-w-md mb-6">
                 Professional home staging education to help you transform
                 spaces and build your dream career in interior design.

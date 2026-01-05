@@ -1,21 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710 680" fill="none">
-  <!-- Gray filled arrow shape -->
-  <path d="M355 45 L435 190 L400 190 L400 520 L435 520 L355 635 L275 520 L310 520 L310 190 L275 190 Z" fill="#E5E5E5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710 750" fill="none">
+  <!-- Gray double-ended arrow shape (up and down) -->
+  <path d="M355 35 L420 150 L385 150 L385 600 L420 600 L355 715 L290 600 L325 600 L325 150 L290 150 Z" fill="#E0E0E0"/>
   
   <!-- Outer dark blue triangle -->
-  <path d="M355 25 L685 595 L25 595 Z" stroke="#395264" stroke-width="4" fill="none"/>
+  <path d="M355 55 L670 620 L40 620 Z" stroke="#395264" stroke-width="4" fill="none"/>
   
   <!-- Teal triangle 1 (largest) -->
-  <path d="M355 65 L635 545 L75 545 Z" stroke="#4BA3A3" stroke-width="3" fill="none"/>
+  <path d="M355 115 L610 570 L100 570 Z" stroke="#4BA3A3" stroke-width="3" fill="none"/>
   
-  <!-- Teal triangle 2 (medium) -->
-  <path d="M355 145 L555 485 L155 485 Z" stroke="#4BA3A3" stroke-width="3" fill="none"/>
+  <!-- Teal triangle 2 (medium-large) -->
+  <path d="M355 175 L550 520 L160 520 Z" stroke="#4BA3A3" stroke-width="2.5" fill="none"/>
   
-  <!-- Teal triangle 3 (small) -->
-  <path d="M355 225 L475 425 L235 425 Z" stroke="#4BA3A3" stroke-width="2.5" fill="none"/>
+  <!-- Teal triangle 3 (medium) -->
+  <path d="M355 235 L490 470 L220 470 Z" stroke="#4BA3A3" stroke-width="2.5" fill="none"/>
+  
+  <!-- Teal triangle 4 (small) -->
+  <path d="M355 295 L430 420 L280 420 Z" stroke="#4BA3A3" stroke-width="2" fill="none"/>
   
   <!-- Horizontal lines -->
-  <line x1="25" y1="340" x2="685" y2="340" stroke="#395264" stroke-width="3"/>
-  <line x1="55" y1="365" x2="655" y2="365" stroke="#4BA3A3" stroke-width="2.5"/>
+  <line x1="40" y1="355" x2="670" y2="355" stroke="#395264" stroke-width="3"/>
+  <line x1="70" y1="385" x2="640" y2="385" stroke="#4BA3A3" stroke-width="2.5"/>
 </svg>
-

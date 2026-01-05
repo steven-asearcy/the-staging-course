@@ -13,11 +13,13 @@ import {
   ChevronRight,
   Trash2,
   Pencil,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { toast } from "sonner";
 import type { Chapter, Lesson, Resource } from "@prisma/client";
 
-import { createChapter, deleteChapter, updateChapter } from "@/actions/chapter";
+import { createChapter, deleteChapter, updateChapter, publishChapter, unpublishChapter } from "@/actions/chapter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -157,6 +159,24 @@ export function ChaptersList({ courseId, chapters }: ChaptersListProps) {
     }
   }
 
+  async function handlePublishToggle(chapterId: string, isPublished: boolean) {
+    try {
+      const result = isPublished
+        ? await unpublishChapter(chapterId)
+        : await publishChapter(chapterId);
+
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+
+      toast.success(isPublished ? "Chapter unpublished" : "Chapter published");
+      router.refresh();
+    } catch {
+      toast.error("Something went wrong");
+    }
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -235,6 +255,22 @@ export function ChaptersList({ courseId, chapters }: ChaptersListProps) {
                     </span>
                     {editingId !== chapter.id && (
                       <>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7"
+                          title={chapter.isPublished ? "Unpublish" : "Publish"}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handlePublishToggle(chapter.id, chapter.isPublished);
+                          }}
+                        >
+                          {chapter.isPublished ? (
+                            <EyeOff className="h-3 w-3" />
+                          ) : (
+                            <Eye className="h-3 w-3" />
+                          )}
+                        </Button>
                         <Button
                           variant="ghost"
                           size="icon"
